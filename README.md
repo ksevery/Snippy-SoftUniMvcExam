@@ -1,4 +1,3 @@
-# Snippy-SoftUniMvcExam
 Snippy
 ======
 

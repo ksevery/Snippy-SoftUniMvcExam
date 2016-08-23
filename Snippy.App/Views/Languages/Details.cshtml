@@ -1,0 +1,12 @@
+﻿@model Snippy.App.Models.ViewModels.LanguageDetailsVM
+
+@{
+    ViewBag.Title = $"Language {Model.Language}";
+}
+
+<h3>All snippets with language <span class="label label-primary">@Model.Language</span></h3>
+@foreach (var snip in @Model.Snippets)
+{
+    @Html.Partial("_SnippetPartial", snip)
+}
+

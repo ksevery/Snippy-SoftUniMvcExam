@@ -1,0 +1,12 @@
+﻿@model Snippy.App.Models.ViewModels.LabelDetailsVM
+
+@{
+    ViewBag.Title = $"Label {Model.Label}";
+}
+
+<h3>All snippets with label <span class="label label-primary">@Model.Label</span></h3>
+@foreach(var snip in @Model.Snippets)
+{
+    @Html.Partial("_SnippetPartial", snip)
+}
+

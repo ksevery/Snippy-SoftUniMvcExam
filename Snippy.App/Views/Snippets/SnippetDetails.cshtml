@@ -1,0 +1,61 @@
+﻿@model Snippy.App.Models.ViewModels.FullSnippetVM
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <p>
+            @Html.ActionLink(Model.Language,
+            "Details",
+            "Languages",
+            routeValues: new { language = Model.Language },
+            htmlAttributes: new { @class = "btn btn-success" })
+            <span class="lead">@Model.Title</span>
+            @if (this.User.Identity.IsAuthenticated && (this.User.Identity.Name == Model.AuthorName))
+            {
+                @Html.ActionLink("Edit",
+               "Edit",
+               routeValues: new { snippetId = Model.SnippetId })
+            }
+            
+        </p>
+        <p>
+            <div>by <span class="glyphicon glyphicon-user"><strong>@Model.AuthorName</strong></span> on @Model.CreationDate.ToString("dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)</div>
+            <div>
+                Labels:
+                @foreach (var label in Model.Labels)
+            {
+                    @Html.ActionLink(label.Text, "Details", "Labels", routeValues: new { labelName = label.Text }, htmlAttributes: new { @class = "btn btn-primary btn-sm" })
+                }
+            </div>
+        </p>
+    </div>
+    <div class="panel-body">
+        <p>@Model.Description</p>
+        <div class="panel panel-default">
+            @Model.Code
+        </div>
+    </div>
+    <div class="panel-footer">
+        <h4>Comments:</h4>
+        @if (User.Identity.IsAuthenticated)
+        {
+            using (Html.BeginForm())
+            {
+                Html.AntiForgeryToken();
+                @: @Html.Partial("_CommentCreatePartial", new Snippy.App.Models.BindingModels.CommentBM())
+            }
+        }
+
+        @if (!Model.Comments.Any())
+        {
+            <div class="panel comments">There are no comments right now.</div>
+        }
+        else
+        {
+            @Html.DisplayFor(m => m.Comments)
+        }
+    </div>
+</div>

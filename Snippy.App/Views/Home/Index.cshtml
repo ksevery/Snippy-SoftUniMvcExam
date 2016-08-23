@@ -1,0 +1,54 @@
+﻿@model Snippy.App.Models.ViewModels.HomePageVM
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<div class="row">
+    <div class="col-sm-5">
+        <h3>Latest snippets:</h3>
+        @foreach (var snip in Model.Snippets)
+        {
+            @Html.Partial("_SnippetPartial", snip)
+        }
+    </div>
+
+    <div class="col-sm-5">
+        <h3>Latest comments:</h3>
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>@comment.Content</p>
+                    <div>
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span class="lead">@comment.AuthorName</span><span> on @comment.CreationDate.ToString("dd.MM.yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture)</span>
+                    </div>
+                    <div>
+                        <span>on snippet @Html.ActionLink(comment.SnippetTitle, "GetSnippet", "Snippets", routeValues: new { title = comment.SnippetTitle }, htmlAttributes: null)</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="col-sm-2">
+        <p></p>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Best labels</h4>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var label in Model.Labels)
+                    {
+                        <li class="list-group-item">
+                            @Html.ActionLink(@label.Text, "Details", "Labels", routeValues: new { labelName = label.Text }, htmlAttributes: null)
+                            <span class="right badge">@label.SnippetCount</span>
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

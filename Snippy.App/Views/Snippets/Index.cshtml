@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Snippy.App.Models.ViewModels.ConciseSnippetVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All snippets</h2>
+
+@foreach(var @snip in Model)
+{
+    @Html.Partial("_SnippetPartial", snip)
+}
+
+<ul class="pagination">
+    @for (int page = 1; page <= ViewBag.TotalPages; page++)
+    {
+        string listItemClass = string.Empty;
+        if (page == ViewBag.CurrentPage)
+        {
+            listItemClass = "active";
+        }
+
+        <li class="@listItemClass">@Html.ActionLink(page.ToString(), "Index", "Snippets", routeValues: new { page = page, count = 5 }, htmlAttributes: null)</li>
+    }
+</ul>

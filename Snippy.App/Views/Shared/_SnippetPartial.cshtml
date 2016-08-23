@@ -1,0 +1,12 @@
+﻿@model Snippy.App.Models.ViewModels.ConciseSnippetVM
+
+<div class="panel">
+    <h4>@Html.ActionLink(@Model.Title, "GetSnippet", "Snippets", routeValues: new { title = Model.Title }, htmlAttributes: null)</h4>
+    @foreach (var label in Model.Labels)
+    {
+        @Html.ActionLink(label, "Details", "Labels", routeValues: new { labelName = label }, htmlAttributes: new { @class = "btn btn-primary" })
+    }
+</div>
+
+
+
